@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ARBIX AI AGENT - Advanced Crypto Arbitrage Platform</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-dark: #000000;
+            --text-primary: #ffffff;
+            --hover-gray: #111111;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Scientific Background */
+        .grid-pattern {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background-image: 
+                linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+            background-size: 40px 40px;
+            z-index: -1;
+            opacity: 0.15;
+        }
+
+        .star-field {
+            position: fixed;
+            width: 100%;
+            height: 100vh;
+            overflow: hidden;
+            z-index: -1;
+        }
+
+        .star {
+            position: absolute;
+            background: rgba(255,255,255,0.8);
+            border-radius: 50%;
+            animation: twinkle var(--duration) ease-in-out infinite;
+        }
+
+        /* Enhanced Header */
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 1.2rem 5%;
+            background: rgba(0, 0, 0, 0.98);
+            backdrop-filter: blur(15px);
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+        }
+
+        .logo-symbol {
+            width: 65px;
+            height: 65px;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .logo-symbol::before {
+            content: "∞";
+            font-size: 5.2rem;
+            color: var(--text-primary);
+            animation: logoFloat 4s ease-in-out infinite;
+            line-height: 1;
+            margin-top: -8px;
+        }
+
+        .logo-text {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            line-height: 1.2;
+        }
+
+        /* Navigation */
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-link {
+            color: var(--text-primary);
+            text-decoration: none;
+            font-weight: 500;
+            position: relative;
+            padding: 0.5rem 0;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--text-primary);
+            transition: width 0.3s ease;
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        .connect-wallet {
+            background: rgba(255,255,255,0.1);
+            color: var(--text-primary);
+            padding: 0.8rem 1.8rem;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255,255,255,0.3);
+        }
+
+        .connect-wallet:hover {
+            background: rgba(255,255,255,0.2);
+        }
+
+        /* Main Content */
+        .section {
+            padding: 8rem 5%;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+        }
+
+        .hero-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            font-size: 4rem;
+            margin-bottom: 2rem;
+            line-height: 1.2;
+            color: var(--text-primary);
+        }
+
+        .hero-text {
+            max-width: 800px;
+            margin-bottom: 3rem;
+            line-height: 1.8;
+        }
+
+        /* Features Section */
+        #features .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 4rem;
+        }
+
+        .feature-card {
+            padding: 2rem;
+            background: rgba(255,255,255,0.05);
+            border-radius: 15px;
+            border: 1px solid rgba(255,255,255,0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+        }
+
+        /* Horizontal Exchange Grid */
+        .exchange-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 1rem;
+            margin-top: 3rem;
+        }
+
+        .exchange-item {
+            padding: 1.2rem;
+            background: rgba(255,255,255,0.05);
+            border-radius: 8px;
+            text-align: center;
+            text-decoration: none;
+            color: var(--text-primary);
+            transition: all 0.3s ease;
+            border: 1px solid transparent;
+        }
+
+        .exchange-item:hover {
+            border-color: var(--text-primary);
+            transform: translateY(-5px);
+        }
+
+        /* Security Section */
+        .security-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .security-card {
+            padding: 2rem;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 15px;
+        }
+
+        /* Footer */
+        footer {
+            padding: 4rem 5%;
+            background: linear-gradient(rgba(0,0,0,0.9), rgba(0,0,0,0.7)), url('footerImage.jpg');
+            background-size: cover;
+            background-position: center;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 3rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Wallet Notification */
+        .wallet-notification {
+            position: fixed;
+            top: 20px;
+            right: -300px;
+            background: rgba(0,0,0,0.9);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            border: 1px solid rgba(255,255,255,0.3);
+            transition: all 0.4s ease;
+            box-shadow: 0 0 15px rgba(0,255,136,0.2);
+        }
+
+        .wallet-notification.active {
+            right: 20px;
+        }
+
+        /* Animations */
+        @keyframes logoFloat {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-8px) rotate(3deg); }
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 1; }
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.5rem;
+            }
+            
+            .logo-symbol {
+                width: 50px;
+                height: 50px;
+            }
+            
+            .logo-symbol::before {
+                font-size: 4rem;
+            }
+            
+            .logo-text {
+                font-size: 1.5rem;
+            }
+
+            .exchange-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .footer-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="grid-pattern"></div>
+    <div class="star-field"></div>
+
+    <header>
+        <a href="#" class="logo">
+            <div class="logo-symbol"></div>
+            <div class="logo-text">ARBIX<br>AI AGENT</div>
+        </a>
+        <nav class="nav-links">
+            <a href="#features" class="nav-link">Features</a>
+            <a href="#exchanges" class="nav-link">Exchanges</a>
+            <a href="#security" class="nav-link">Security</a>
+            <a href="#connect" class="connect-wallet">
+                <i class="fas fa-wallet"></i>
+                Connect Wallet
+            </a>
+        </nav>
+    </header>
+
+    <main>
+        <!-- Updated Hero Section -->
+        <section class="section" id="hero">
+            <div class="hero-content">
+                <h1>AI-Powered Crypto Arbitrage Platform</h1>
+                <p class="hero-text">
+                    ARBIX AI Agent revolutionizes cryptocurrency arbitrage through advanced machine learning algorithms and real-time market analysis. Our platform autonomously executes complex trading strategies across 40+ global exchanges and 20+ blockchain networks, identifying profitable opportunities in milliseconds. Leveraging quantum-inspired computing models and deep neural networks, ARBIX continuously adapts to market volatility while maintaining military-grade security protocols. The system features cross-exchange arbitrage, triangular arbitrage cycles, and DeFi liquidity mining, all managed through an intuitive institutional-grade interface. With sub-100ms trade execution speeds and multi-sig cold storage integration, ARBIX ensures optimal returns while mitigating risks through automated stop-loss triggers and portfolio rebalancing. Our AI-driven sentiment analysis module monitors global crypto markets 24/7, processing news, social media, and on-chain data to predict price movements before they occur. ARBIX represents the pinnacle of automated crypto trading technology, combining institutional-grade security with retail accessibility.
+                </p>
+                
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <h3><i class="fas fa-bolt"></i> Real-Time Execution</h3>
+                        <p>Sub-100ms trade execution with WebSocket API integration</p>
+                    </div>
+                    <div class="feature-card">
+                        <h3><i class="fas fa-shield-alt"></i> Advanced Security</h3>
+                        <p>Multi-sig wallets & AES-256 encryption</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Features Section -->
+        <section class="section" id="features">
+            <div class="hero-content">
+                <h2>Core Features</h2>
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <h3><i class="fas fa-robot"></i> AI Strategies</h3>
+                        <p>Cross-exchange, triangular, and statistical arbitrage</p>
+                    </div>
+                    <div class="feature-card">
+                        <h3><i class="fas fa-chart-line"></i> Risk Management</h3>
+                        <p>Auto stop-loss triggers and slippage protection</p>
+                    </div>
+                    <div class="feature-card">
+                        <h3><i class="fas fa-link"></i> Cross-Chain</h3>
+                        <p>Ethereum/Solana bridges and Layer 2 solutions</p>
+                    </div>
+                    <div class="feature-card">
+                        <h3><i class="fas fa-brain"></i> Sentiment Analysis</h3>
+                        <p>Real-time NLP processing of market data</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Updated Exchanges Section -->
+        <section class="section" id="exchanges">
+            <div class="hero-content">
+                <h2>Integrated Exchanges</h2>
+                <div class="exchange-grid">
+                    <a href="https://www.binance.com" target="_blank" rel="noopener noreferrer" class="exchange-item">Binance</a>
+                    <a href="https://www.coinbase.com" target="_blank" rel="noopener noreferrer" class="exchange-item">Coinbase</a>
+                    <a href="https://www.kraken.com" target="_blank" rel="noopener noreferrer" class="exchange-item">Kraken</a>
+                    <a href="https://www.kucoin.com" target="_blank" rel="noopener noreferrer" class="exchange-item">KuCoin</a>
+                    <a href="https://www.okx.com" target="_blank" rel="noopener noreferrer" class="exchange-item">OKX</a>
+                    <a href="https://www.bybit.com" target="_blank" rel="noopener noreferrer" class="exchange-item">Bybit</a>
+                    <a href="https://www.bitfinex.com" target="_blank" rel="noopener noreferrer" class="exchange-item">Bitfinex</a>
+                    <a href="https://www.htx.com" target="_blank" rel="noopener noreferrer" class="exchange-item">HTX</a>
+                    <a href="https://www.gate.io" target="_blank" rel="noopener noreferrer" class="exchange-item">Gate.io</a>
+                    <a href="https://www.mexc.com" target="_blank" rel="noopener noreferrer" class="exchange-item">MEXC</a>
+                    <a href="https://poloniex.com" target="_blank" rel="noopener noreferrer" class="exchange-item">Poloniex</a>
+                    <a href="https://www.gemini.com" target="_blank" rel="noopener noreferrer" class="exchange-item">Gemini</a>
+                    <a href="https://crypto.com/exchange" target="_blank" rel="noopener noreferrer" class="exchange-item">Crypto.com</a>
+                    <a href="https://www.bitstamp.net" target="_blank" rel="noopener noreferrer" class="exchange-item">Bitstamp</a>
+                    <a href="https://dydx.exchange" target="_blank" rel="noopener noreferrer" class="exchange-item">dYdX</a>
+                    <a href="https://www.huobi.com" target="_blank" rel="noopener noreferrer" class="exchange-item">Huobi</a>
+                    <a href="https://www.bitget.com" target="_blank" rel="noopener noreferrer" class="exchange-item">Bitget</a>
+                    <a href="https://phemex.com" target="_blank" rel="noopener noreferrer" class="exchange-item">Phemex</a>
+                    <a href="https://www.deribit.com" target="_blank" rel="noopener noreferrer" class="exchange-item">Deribit</a>
+                    <a href="https://whitebit.com" target="_blank" rel="noopener noreferrer" class="exchange-item">WhiteBIT</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Security Section -->
+        <section class="section" id="security">
+            <div class="hero-content">
+                <h2>Security Protocols</h2>
+                <div class="security-grid">
+                    <div class="security-card">
+                        <h3><i class="fas fa-lock"></i> Asset Protection</h3>
+                        <ul>
+                            <li>Cold storage integration</li>
+                            <li>Multi-signature wallets</li>
+                            <li>Insurance fund protection</li>
+                        </ul>
+                    </div>
+                    <div class="security-card">
+                        <h3><i class="fas fa-user-shield"></i> Account Security</h3>
+                        <ul>
+                            <li>2FA authentication</li>
+                            <li>IP whitelisting</li>
+                            <li>Session encryption</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Updated Footer -->
+        <footer>
+            <div class="footer-content">
+                <div class="footer-grid">
+                    <div>
+                        <h4><i class="fas fa-envelope"></i> Contact</h4>
+                        <p>arbixaiagent@gmail.com</p>
+                        <p>support@arbix.com</p>
+                        <p>+1-555-ARBIX99</p>
+                    </div>
+                    <div>
+                        <h4><i class="fas fa-balance-scale"></i> Legal</h4>
+                        <p>Terms of Service</p>
+                        <p>Privacy Policy</p>
+                        <p>Compliance</p>
+                    </div>
+                    <div>
+                        <h4><i class="fas fa-share-alt"></i> Connect</h4>
+                        <p><i class="fab fa-twitter"></i> Twitter</p>
+                        <p><i class="fab fa-telegram"></i> Telegram</p>
+                        <p><i class="fas fa-book"></i> Documentation</p>
+                    </div>
+                </div>
+                <p style="text-align: center; margin-top: 3rem;">
+                    © 2025 ARBIX AI AGENT - All rights reserved
+                </p>
+            </div>
+        </footer>
+    </main>
+
+    <script>
+        // Star Field Generation
+        function createStars() {
+            const container = document.querySelector('.star-field');
+            for(let i = 0; i < 200; i++) {
+                const star = document.createElement('div');
+                star.className = 'star';
+                star.style.left = `${Math.random() * 100}%`;
+                star.style.top = `${Math.random() * 100}%`;
+                star.style.width = `${Math.random() * 2 + 1}px`;
+                star.style.height = star.style.width;
+                star.style.setProperty('--duration', `${Math.random() * 3 + 2}s`);
+                container.appendChild(star);
+            }
+        }
+        createStars();
+
+        // Updated Wallet Notification
+        document.querySelector('.connect-wallet').addEventListener('click', function(e) {
+            e.preventDefault();
+            const notification = document.createElement('div');
+            notification.className = 'wallet-notification';
+            notification.textContent = 'This feature is coming soon';
+            
+            document.body.appendChild(notification);
+            
+            setTimeout(() => notification.classList.add('active'), 10);
+            
+            setTimeout(() => {
+                notification.classList.remove('active');
+                setTimeout(() => notification.remove(), 400);
+            }, 3000);
+        });
+
+        // Activate feature cards on scroll
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if(entry.isIntersecting) {
+                    entry.target.style.opacity = 1;
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        });
+
+        document.querySelectorAll('.feature-card').forEach((card) => {
+            card.style.opacity = 0;
+            card.style.transform = 'translateY(20px)';
+            observer.observe(card);
+        });
+    </script>
+</body>
+</html>
